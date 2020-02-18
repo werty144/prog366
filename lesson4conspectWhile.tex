@@ -1,0 +1,138 @@
+\documentclass[12pt]{article} % 12 -- размер шрифта
+\usepackage{cmap} % Чтобы можно было копировать русский текст из pdf
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel} % В частности эта строка отвечает за правильные переносы слов в конце строки
+\usepackage[utf8]{inputenc} % Проверьте, что кодировка файла -- тоже utf8
+\usepackage{amsmath, amssymb} % Чтобы юзать математические символы
+\usepackage{ dsfont }
+\usepackage{ wasysym }
+\usepackage[makeroom]{cancel}
+\usepackage{listings}
+\usepackage{tcolorbox}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary {positioning}
+
+\newcommand \tab[1][1cm]{\hspace*{#1}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+\title{Конспект четвертого занятия\\
+	\large Цикл с помощью While}
+\author{Парамонов Антон Игоревич}
+\maketitle
+\section{While}
+\tab Мы научились повторять какое-то действие многократно с помощью команды \textcolor{red}{for}, однако эта "многократность" ограничена. Напомню, что нам нужно указать диапазон и шаг, с которым переменная \textit{i} будет перемещаться по диапазону. Когда \textit{i} пройдет весь диапазон, цикл завершится. У этого механизма есть две слабости:
+\begin{enumerate}
+	\item Мы должны указать диапазон заранее и не можем его менять в зависимости от того, что в цикле происходит
+	\item Переменная \textit{i} меняется с каким-то постоянным шагом. А нам, возможно, понадобится изменять ее в зависимости от того, что происходит в цикле, или, например, все время умножать на 3, а не прибавлять какое-то фиксированное число
+\end{enumerate}
+\tab Возможно, объяснение недостатков \textcolor{red}{for} показалось вам абстрактным, давайте разбираться на примере. Вот как пишется \textcolor{red}{while}
+\begin{lstlisting}[language=Python]
+i = 0
+while (i < 3):
+	print("Now i is")
+	print(i)
+	i = i + 1
+print("While is over")
+#Output:
+#Now i is
+#0
+#Now i is
+#1
+#Now i is
+#2
+#While is over
+\end{lstlisting}
+\tab Это программа делает точно то же самое, что 
+\begin{lstlisting}[language=Python]
+for i in range(3):
+	print("Now i is")
+	print(i)
+print("While is over")
+\end{lstlisting}
+\tab Давайте разбираться в коде. Во-первых, заметим, что переменную \textit{i} нужно завести самостоятельно (1ая строчка) и указывать, что с ней делать и в какой момент цикла, нужно тоже самостоятельно, так в 5ой строчке мы прибавляем к \textit{i} 1.\\
+\tab \underline{В круглых скобках} после команды \textcolor{red}{while} мы пишем условие. Пока это условие выполняется, цикл будет выполняться. \underline{После круглых скобок} \underline{ставится двоеточие}. \underline{Тело цикла пишется с отступом.}\\
+\tab Большие возможности - большая ответственность. While нужно писать аккуратно. Заметим, что \underline{само по себе \textit{i} не менятся}, что с ним делать и когда это делать, программист указывает самостоятельно. В нашей программе можно было бы забыть увеличивать \textit{i} на 1, тогда программа ушла бы в бесконечный цикл
+\begin{lstlisting}[language=Python]
+i = 0
+while (i < 3):
+	print("Now i is")
+	print(i)
+print("While is over")
+#Output:
+#Now i is
+#0
+#Now i is
+#0
+#Now i is
+#0
+#Now i is
+#0
+#.
+#.
+#.
+\end{lstlisting}
+\tab Переменная \textit{i} никак не меняется, поэтому условие $\textit{i} < 3$ выполняется из раза в раз, и программа бесконечно выводит одно и то же.\\
+\tab Хорошо, мы научились с помощью \textcolor{red}{while} симулировать \textcolor{red}{for}, давайте теперь сделаем то, что с помощью \textcolor{red}{for} у нас сделать бы не получилось. Будем менять \textit{i} не прибавлением какого-то числа. Допустим мы хотим вывести все степени тройки от 2 до 100. Пожалуйста:
+\begin{lstlisting}[language=Python]
+i = 3
+while (i < 100):
+	print(i)
+	i = i * 3
+#Output:
+#3
+#9
+#27
+#81
+\end{lstlisting}
+\tab Или перед нами такая задача: Нам вводят целые числа, при этом сколько их будет, заранее не известно, однако нам сказали, что последовательность закончится нулем. Наша задача - сказать сумму всех введенных чисел.
+\begin{lstlisting}[language=Python]
+summ = 0
+a = 1
+while (a != 0):
+	a = int(input())
+	summ = summ + a
+print("Sum is", a)
+#Input:
+#1
+#2
+#-3
+#5
+#7
+#0
+#Output:
+#Sum is 12
+\end{lstlisting}
+\tab Здесь мы завели переменную \textit{a}, в которую будем записывать числа, которые нам вводят, и переменную \textit{summ}, в которой будем насчитывать сумму. Изначально сумма 0, а вот \textit{a} можно  назначить любое значение, все равно мы его "затрем"  считав число в 4ой строчке и записав его в \textit{a}. Главное, не сделать \textit{a} нулем сразу, иначе в цикл мы попросту не попадем, т.к. условие не выполнится.\\
+\tab Раньше мы этого не обсуждали, но в скобочках у \textcolor{red}{print} можно указывать несколько вещей через запятую, тогда они напечатаются через пробел.
+\end{document}

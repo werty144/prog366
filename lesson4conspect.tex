@@ -1,0 +1,165 @@
+\documentclass[12pt]{article} % 12 -- размер шрифта
+\usepackage{cmap} % Чтобы можно было копировать русский текст из pdf
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel} % В частности эта строка отвечает за правильные переносы слов в конце строки
+\usepackage[utf8]{inputenc} % Проверьте, что кодировка файла -- тоже utf8
+\usepackage{amsmath, amssymb} % Чтобы юзать математические символы
+\usepackage{ dsfont }
+\usepackage{ wasysym }
+\usepackage[makeroom]{cancel}
+\usepackage{listings}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary {positioning}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+\title{Конспект четвертого занятия}
+\author{Парамонов Антон Игоревич}
+\maketitle
+\section{For}
+В первом контесте у вас была задача посчитать сумму $\frac{1}{1^2} + \frac{1}{2^2} + \frac{1}{3^2} + \ldots + \frac{1}{10^2} \approx \frac{\pi^2}{6}$. Вычислив такую сумму, несложно посчитать $\pi$. Понятно, что чем больше слагаемых мы выпишем, тем точнее будет приближение. Но выписывать их ручками лень, а если нужно выписать порядка миллиона, то просто невозможно. В таких вот случаях нам на помощь и приходит \textcolor{red}{for} - цикл.\\
+Для начала рассмотрим пример попроще и познакомимся с правилами написания цикла
+\begin{lstlisting}[language=Python]
+for i in range(3): #shapka (golova) cikla
+	print("I love") #telo cikla
+	print(366) #telo cikla
+print("Bye bye!") #not in cycle any more
+#Output:
+#I love
+#366
+#I love
+#366
+#I love
+#366
+#Bye bye!
+\end{lstlisting}
+Что здесь произошло. Главная идея цикла - повторение какого-то действия несколько раз. Сколько раз - написано в шапке цикла. В данном случае 3. Какое действие повторять написано в теле цикла, в данном случае мы выводим строчку "I love" и число 366.\\
+
+Что такое написано в шапке, узнаем далее, на настоящий момент надо запомнить, что после некоего слова \textcolor{red}{range} в круглых скобках указано число повторений, после этого стоит \textbf{двоеточие}, а тело цикла пишется с \textbf{отступом}.\\
+Теперь разберемся, что это за \textit{i} в шапке цикла. Посмотрите на следующую программу
+\begin{lstlisting}[language=Python]
+for i in range(5): 
+	print("Now i is") 
+	print(i)
+print("Goodbye!") 
+#Output:
+#Now i is
+#0
+#Now i is
+#1
+#Now i is
+#2
+#Now i is
+#3
+#Now i is
+#4
+#Goodbye!
+\end{lstlisting}
+\begin{tikzpicture}[node distance = 5 cm, ->, thick]
+
+\node[draw, circle] (A) {Увеличить i};
+\node[draw, circle, right of=A] (B) {Выполнить тело};
+
+\path (A) edge [bend left =20] node {} (B);
+\path (B) edge [bend left = 20] node {} (A);
+
+\end{tikzpicture}\\
+\textit{i} - это такая переменная, которая принимает значения от \textbf{0} до, в нашем случае, 4ех (не 5ти!). И для каждого значения \textit{i} выполнится тело цикла. Т.е. тело цикла выполнится 5 раз, \textit{i} будет принимать значения $\underbrace{0, 1, 2, 3, 4}_{5}$. В этом можно убедиться, посмотрев на вывод программы. На каждом шаге цикла (коих 5) мы просим напечатать строчку "Now i is" и само число \textit{i}. Видно, что с каждым следующим шагом \textit{i} увеличивается на 1, пока не станет равно 4 (т.е. тому числу, которое мы указали в шапке, минус один). \\
+Теперь мы можем написать хорошую программу для подсчета суммы $\frac{1}{1^2} + \frac{1}{2^2} + \frac{1}{3^2} + \ldots + \frac{1}{10^2}$. 
+\begin{lstlisting}[language=Python]
+sum = 0
+for i in range(10):
+	sum = sum + 1/((i + 1) ** 2)
+print(sum)
+#Output:
+#1.5497677311665408
+\end{lstlisting}
+Здесь мы завели переменную \textit{sum}, изначально она равна 0, а на каждом шаге цикла мы прибавляем к ней (если быть точнее, мы даем ей новое значение, равное старому плюс что-то) $\frac{1}{(i + 1)^2}$. Следующая табличка демонстрирует пошагово, что тут происходит\\
+
+
+\begin{tabular}{ |p{3cm}|p{3cm}|p{3cm}|  }
+
+	\hline
+	Шаг цикла & i & sum\\
+	\hline
+	\hline
+	До цикла & не существует & 0\\
+	\hline
+	1&0&$1$\\
+	\hline 
+	2&1&$1 + \frac{1}{4}$\\
+	\hline
+	3&2&$1 + \frac{1}{4} + \frac{1}{9}$\\
+	\hline
+	\vdots & \vdots & \vdots \\
+	\hline
+	10 & 9 & $\frac{1}{1^2} + \frac{1}{2^2} + \frac{1}{3^2} + \ldots + \frac{1}{10^2}$\\
+	\hline
+	После цикла & не существует & $\frac{1}{1^2} + \frac{1}{2^2} + \frac{1}{3^2} + \ldots + \frac{1}{10^2}$\\
+	\hline
+\end{tabular}\\
+\\
+После цикла у нас есть насчитанная сумма в переменной \textit{sum}, с которой мы вольны делать, что захотим.\\
+Заметим, что в коде мы вынуждены писать 'i + 1', потому что \textit{i} принимает значения от 0 до 9, а нам нужно от 1 до 10. Это можно исправить и по-другому:
+\begin{lstlisting}[language=Python]
+sum = 0
+for i in range(1, 11):
+	sum = sum + 1/(i ** 2)
+print(sum)
+#Output:
+#1.5497677311665408
+\end{lstlisting}
+Если в круглых скобках после \textcolor{red}{range} идет два числа, это значит \textit{i} будет принимать значения от первого включительно до второго не включительно (именно поэтому второе число 11, нам ведь нужно до 10).\\
+В тех же скобках можно написать и третье число - шаг. А именно то, как меняется наше \textit{i}. Если до этого оно менялось на +1, то теперь можно менять его на любое целое число.\\
+\begin{lstlisting}[language=Python]
+for i in range(10, 22, 3):
+	print(i)
+#Output:
+#10
+#13
+#16
+#19
+\end{lstlisting}
+И даже отрицательное (\textit{i} будет уменьшаться):
+\begin{lstlisting}[language=Python]
+for i in range(15, 10, -1):
+	print(i)
+#Output:
+#15
+#14
+#13
+#12
+#11
+\end{lstlisting}
+\end{document}

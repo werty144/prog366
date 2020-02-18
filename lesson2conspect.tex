@@ -1,0 +1,117 @@
+\documentclass[12pt]{article} % 12 -- размер шрифта
+\usepackage{cmap} % Чтобы можно было копировать русский текст из pdf
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel} % В частности эта строка отвечает за правильные переносы слов в конце строки
+\usepackage[utf8]{inputenc} % Проверьте, что кодировка файла -- тоже utf8
+\usepackage{amsmath, amssymb} % Чтобы юзать математические символы
+\usepackage{ dsfont }
+\usepackage{ wasysym }
+\usepackage[makeroom]{cancel}
+\usepackage{listings}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+\title{Конспект второго занятия}
+\author{Парамонов Антон Игоревич}
+\maketitle
+\section{Ввод и типы}
+На первом занятии мы с вами научились выводить числа и строчки на экран. Сегодня мы изучим ввод. Вот пример программы, которая считывает строчку, и приписывает к ней строчку "FML366".
+\begin{lstlisting}[language=Python]
+x = input()
+print(x + "FML366")
+#Input: Anton
+#Output: AntonFML366 
+\end{lstlisting}
+Строчки 3 и 4 с '\#' не являются частью программы, это пример ввода (input) и соответствующего ему вывода (output)\\
+Когда вы запустите такую программу, она "повиснет" и будет ждать, пока вы ей не введете что-либо. За это отвечает первая строчка. После того, как вы что-то ввели и нажали Enter, то, что вы ввели, записалось в переменную 'x', которую дальше можно использовать в своих интересах.\\
+А вот другая программа
+\begin{lstlisting}[language=Python]
+x = input()
+print(x + 366)
+#Input: 7
+#Expected output: 373
+'''
+Actual output: Traceback (most recent call last):
+	File "/home/user/PycharmProjects/untitled/test.py", line 2, in <module>
+	print(x + 7)
+	TypeError: must be str, not int
+'''
+\end{lstlisting}
+Программа падает с ошибкой. Давайте попробуем разобраться, что нам пишет python. Ошибка произошла во второй строчке, ошибка: "must be \textcolor{blue}{str}, not \textcolor{blue}{int}". \\
+Дело в том, что в python есть различные \textbf{типы}. Есть тип целое число - \textcolor{blue}{int} (сокращенно от английского integer - целое число), а есть тип строка - \textcolor{blue}{str} (сокращенно от string). И между этими типами можно "переключаться". Давайте посмотрим, как это делать.\\
+Вот пример явно неработающей программы:
+\begin{lstlisting}[language=Python]
+print('3' + 4)
+\end{lstlisting}
+Действительно, мы хотим прибавить к строке число, это и не должно работать. А вот как это можно исправить:
+\begin{lstlisting}[language=Python]
+print(int('3') + 4)
+#Output: 7
+\end{lstlisting}
+Команда \textcolor{red}{int} "превращает" строку '3' в число 3. А вот еще способ починить нашу неправильную программу:
+\begin{lstlisting}[language=Python]
+print('3' + str(4))
+#Output: 34
+\end{lstlisting} 
+Здесь мы с помощью команды \textcolor{red}{str} превратили число 4 в строку '4', после чего сложили две строки.\\
+Отлично, теперь мы можем исправить программу, которая прибавляет 366
+\begin{lstlisting}[language=Python]
+x = input()
+print(int(x) + 366)
+#Input: 7
+#Output: 373
+\end{lstlisting}
+Ну а если вы хотите сразу сделать так, чтоб 'x' был числом, а не применять к нему каждый раз команду \textcolor{red}{int}, можно написать так
+\begin{lstlisting}[language=Python]
+x = int(input())
+print(x + 366)
+#Input: 7
+#Output: 373
+\end{lstlisting}
+Здесь мы ввели строчку, сразу превратили ее в число и записали значение (уже числовое) в переменную 'x', которая теперь это значение хранит. 
+
+\section{Частное и остаток}
+А вот вам еще две команды.\\
+Первая команда '\%' - остаток от деления
+\begin{lstlisting}[language=Python]
+print(14 % 3)
+#Output: 2
+\end{lstlisting}
+Вторая: '//' - частное от деления
+\begin{lstlisting}[language=Python]
+print(14 // 3)
+#Output: 4
+\end{lstlisting}
+Пользуйтесь на здоровье и решайте контесты!
+\end{document}
