@@ -1,0 +1,56 @@
+\documentclass[12pt]{article} % 12 -- размер шрифта
+\usepackage{cmap} % Чтобы можно было копировать русский текст из pdf
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel} % В частности эта строка отвечает за правильные переносы слов в конце строки
+\usepackage[utf8]{inputenc} % Проверьте, что кодировка файла -- тоже utf8
+\usepackage{amsmath, amssymb} % Чтобы юзать математические символы
+\usepackage{ dsfont }
+\usepackage{ wasysym }
+\usepackage[makeroom]{cancel}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage[shortlabels]{enumitem}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+
+
+% \pgfplotsset{compat=1.16}
+\begin{document}
+	
+	\begin{center}
+		{\Large\bf
+			Калькулятор
+		}
+	\end{center}
+
+В этом задании вам предстоит написать свой собственный калькулятор. Принцип его работы будет заключаться в следующем: сначала программа должна считать название операции, которую пользователь хочет совершить. Например, \textit{sum}. Далее считываются числа, которые участвуют в этой операции, и программа выдает ответ.\\
+Пример:\\
+\\
+\begin{tabularx}{\textwidth}{|X|X|}
+	\hline
+	{\bf Input} & {\bf Outupt}\\
+	\hline
+	\textit{sum} \newline 2 \newline 2 & 4\\
+	\hline
+\end{tabularx}
+\\
+\begin{center}
+	{\large \bf Подзадачи}
+\end{center}
+\begin{itemize}
+	\item Реализовать операции \textit{sum} (сумма), \textit{prod} (произведение), \textit{sub} (вычитание)
+	\item Реализовать операцию \textit{div} (деление). Помните, что на 0 делить нельзя, но пользователь все равно может попытаться его ввести! В таком случае нужно вывести сообщение о невозможности такой операции.
+	\item Реализовать \textit{sqrt} (квадратный корень) из числа. Помните, что квадратного корня из отрицательных чисел не существует, так что замечание как в предыдущем пункте.
+	\item (*) \textbf{Делайте это задание, только если справились со всеми предыдущими!} Реализовать скобки. Суть в том, чтобы первое число всех вышеперечисленных операций само было результатом операции. Для этого пользователь сначала должен ввести открывающую скобку '(', затем название операции, числа для этой операции, затем закрывающую скобку ')'. После этого он может ввести название еще одной операции, первым числом для которой будет только что посчитанное. Второе, при надобности, он введет.\\
+	Пример:\\
+	\begin{tabularx}{\textwidth}{|X|X|}
+		\hline
+		{\bf Input} & {\bf Outupt}\\
+		\hline
+		( \newline \textit{sum} \newline 2 \newline 2 \newline ) \newline \textit{prod} \newline 2 & 8\\
+		\hline
+		( \newline \textit{sum} \newline 2 \newline 2 \newline ) \newline \textit{sqrt} &  2.0 \\
+		\hline
+	\end{tabularx}
+\end{itemize}
+\end{document}
